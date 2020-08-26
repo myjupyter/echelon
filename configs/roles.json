@@ -1,0 +1,27 @@
+{
+    "roles": [
+        {
+            "id": "admin",
+            "description": "Admin role",
+            "grants": {
+                "users": [
+                    "foo",
+                    "bar",
+                    "sigma"
+                ]
+            },
+            "parents": []
+        },
+        {
+            "id": "user",
+            "description": "User role",
+            "grants" : {
+                "users" : [
+                    "foo",
+                    "bar"
+                ]
+            },
+            "parents": []
+        }
+    ]
+}
