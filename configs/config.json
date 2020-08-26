@@ -1,7 +1,7 @@
 {
     "database" : {
-        "host" : "0.0.0.0",
-        "port" : "8888",
+        "host" : "tarantool",
+        "port" : "3301",
         "login" : "user",
         "password" : "secret"
     },

@@ -48,13 +48,14 @@
 					{{end}}
 				</ul>
 			</div>
-		</div>
-	</nav>
+            </div>
+            </nav>
 
-	{{with .flash_success}}<div class="alert alert-success">{{.}}</div>{{end}}
-	{{with .flash_error}}<div class="alert alert-danger">{{.}}</div>{{end}}
-	{{template "yield" .}}
+    {{with .flash_success}}<div class="alert alert-success">{{.}}</div>{{end}}
+    {{with .flash_error}}<div class="alert alert-danger">{{.}}</div>{{end}}
+    {{template "yield" .}}
 </body>
 </html>
 {{define "pagetitle"}}{{end}}
-{{define "yield"}}{{end}}
+{{define "yield"}}{{end}}	
+

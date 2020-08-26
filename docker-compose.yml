@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  tarantool:
+    build:
+      context: ./
+      dockerfile: build/Dockerfile
+    container_name: users_database
+    ports:
+    - "8888:3301"
+    volumes:
+    - ./data:/var/lib/tarantool
+  
+  application:
+    build:
+      context: ./
+      dockerfile: build/Application
+    container_name: application
+    ports:
+    - "3000:3000"
+    links:
+    - "tarantool:tarantool"

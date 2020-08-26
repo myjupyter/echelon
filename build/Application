@@ -1,0 +1,13 @@
+FROM golang:1.13.8
+
+WORKDIR /go/src/echelon
+
+COPY . .
+
+RUN make 
+RUN cp application /go/bin
+RUN export PATH="$PATH:/go/bin"
+
+EXPOSE 3000
+
+CMD ["application"]
