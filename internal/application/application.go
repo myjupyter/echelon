@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/justinas/nosurf"
 	"github.com/volatiletech/authboss/v3/lock"
@@ -108,8 +111,28 @@ func (app *Application) Start() error {
 	})
 	mux.Get("/", app.index)
 
+	serv := &http.Server{
+		Addr:    app.config.appAddr,
+		Handler: app.mux,
+	}
+
+	go func(logger *log.Logger) {
+		sig := make(chan os.Signal, 1)
+		signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
+		defer signal.Stop(sig)
+		<-sig
+
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+		defer cancel()
+		_ = serv.Shutdown(ctx)
+
+		logger.Warn("Server has been stopped by signal")
+	}(app.logger)
+
 	app.logger.Info("Server has been started at " + app.config.appAddr)
-	return http.ListenAndServe(app.config.appAddr, app.mux)
+	err := serv.ListenAndServe()
+	app.logger.Debug(err)
+	return err
 }
 
 // Rendering
